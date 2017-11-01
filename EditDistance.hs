@@ -47,7 +47,7 @@ better a b = d m n
 
         bounds = ((0,0),(m,n))
 
-data Action = None | Add | Remove | Modify
+data Action = None | Add | Remove | Modify deriving Show
 type Distance = Integer
 
 script :: Eq a => (Action -> Distance) -> [a] -> [a] -> [Action]
