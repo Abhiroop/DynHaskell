@@ -38,4 +38,21 @@ unfold p v h x = if p x then Leaf (v x) else
 
 -- hylo x = if p x then f x else g (map hylo (h x))
 
+data LTree a = LLeaf a | LNode a [LTree a]
 
+fill :: (a -> b) ->  ([b] -> b) -> Tree a -> LTree b
+fill f g = fold (lleaf f) (lnode g)
+
+lleaf :: (t -> a) -> t -> LTree a
+lleaf f x = LLeaf (f x)
+
+lnode :: ([a] -> a) -> [LTree a] -> LTree a
+lnode g ts = LNode (g (map label ts)) ts
+
+label (LLeaf x)    = x
+label (LNode x ts) = x
+
+hylo :: ([a] -> b) -> ([b] -> b) -> ([a] -> [[a]]) -> [a] -> b
+hylo f g h = fold f g . mkTree h
+  where mkTree h = unfold single id h
+        single = undefined 
