@@ -10,6 +10,7 @@ data Attr f a = Attr
               { attribute :: a
               , hole      :: f (Attr f a)}
 
+-- Course of value algebra
 type CVAlgebra f a = f (Attr f a) -> a
 
 histo :: Functor f => CVAlgebra f a -> Term f -> a
