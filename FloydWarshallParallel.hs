@@ -19,7 +19,6 @@ weight g i j = do
 shortestPaths :: [Vertex] -> Graph -> Graph
 shortestPaths vs g = foldl' update g vs
   where
-    update :: Graph -> Vertex -> Graph
     update g k = runPar $ do
       m <- Map.traverseWithKey (\i jmap -> spawn (return (shortmap i jmap))) g
       traverse get m
